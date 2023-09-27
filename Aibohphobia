@@ -1,0 +1,10 @@
+import string
+punctuation = string.punctuation
+# TODO - Repeat the previous exercise but ignore case sensitivity and punctuation.
+def is_palindrome(string):
+  for i in punctuation:
+    string = string.replace(i, '').lower()
+  if string == string[::-1]:
+      return True
+  else :
+       return False
