@@ -1,0 +1,69 @@
+# TODO: Convert to class SequencingTools
+# TODO: Add docstrings
+# TODO: Annotate arguments and include TRY-EXCEPT
+
+ncbi_codon_table = {
+    'TTT': 'F', 'TCT': 'S', 'TAT': 'Y', 'TGT': 'C',
+    'TTC': 'F', 'TCC': 'S', 'TAC': 'Y', 'TGC': 'C',
+    'TTA': 'L', 'TCA': 'S', 'TAA': '*', 'TGA': '*',
+    'TTG': 'L', 'TCG': 'S', 'TAG': '*', 'TGG': 'W',
+    'CTT': 'L', 'CCT': 'P', 'CAT': 'H', 'CGT': 'R',
+    'CTC': 'L', 'CCC': 'P', 'CAC': 'H', 'CGC': 'R',
+    'CTA': 'L', 'CCA': 'P', 'CAA': 'Q', 'CGA': 'R',
+    'CTG': 'L', 'CCG': 'P', 'CAG': 'Q', 'CGG': 'R',
+    'ATT': 'I', 'ACT': 'T', 'AAT': 'N', 'AGT': 'S',
+    'ATC': 'I', 'ACC': 'T', 'AAC': 'N', 'AGC': 'S',
+    'ATA': 'I', 'ACA': 'T', 'AAA': 'K', 'AGA': 'R',
+    'ATG': 'M', 'ACG': 'T', 'AAG': 'K', 'AGG': 'R',
+    'GTT': 'V', 'GCT': 'A', 'GAT': 'D', 'GGT': 'G',
+    'GTC': 'V', 'GCC': 'A', 'GAC': 'D', 'GGC': 'G',
+    'GTA': 'V', 'GCA': 'A', 'GAA': 'E', 'GGA': 'G',
+    'GTG': 'V', 'GCG': 'A', 'GAG': 'E', 'GGG': 'G'
+}
+
+
+def count_atcg(sequence):
+    counts = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
+    sequence = sequence.upper()
+    
+    for nucleotide in sequence:
+        if nucleotide == 'A':
+            counts['A'] += 1
+        if nucleotide == 'T':
+            counts['T'] += 1
+        if nucleotide == 'C':
+            counts['C'] += 1
+        if nucleotide == 'G': 
+            counts['G'] += 1
+    return counts
+
+
+def mutate_sequence(sequence, position, mutation, type_of_mutation):
+    
+    if type_of_mutation == 'substitution':
+        left_part = sequence[:position-1]
+        right_part = sequence[position:]
+        mutated_sequence = left_part + mutation + right_part
+        print(mutated_sequence)
+    
+    if type_of_mutation == "insertion":
+        left_part = sequence[:position-1]
+        right_part = sequence[position-1:]
+        mutated_sequence = left_part + mutation + right_part
+        print(mutated_sequence)
+
+    if type_of_mutation == "deletion":
+        left_part = sequence[:position-1]
+        right_part = sequence[position:]
+        mutated_sequence = left_part + right_part
+        print(mutated_sequence)
+      
+    return
+
+
+def translate(sequence):
+    translated = ""
+    for x in range(0, len(sequence), 3):
+        codon = sequence[x:x+3]
+        translated += (ncbi_codon_table[codon])
+    return translated
